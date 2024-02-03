@@ -3,6 +3,7 @@ import {
   BadRequestException,
   ServiceUnavailableException,
   BadGatewayException,
+  NotFoundException,
 } from '@nestjs/common';
 import { Op } from 'sequelize';
 import { InjectModel } from '@nestjs/sequelize';
@@ -18,7 +19,7 @@ export class WeatherService {
   ) {}
 
   async getDataFromStorage(payload: WeatherDTO): Promise<unknown> {
-    return await this.weatherRequestModel.findOne({
+    const record = await this.weatherRequestModel.findOne({
       where: {
         [Op.and]: {
           lat: String(payload.lat),
@@ -27,6 +28,10 @@ export class WeatherService {
       },
       raw: true,
     });
+
+    if (!record) throw new NotFoundException();
+
+    return record;
   }
 
   async fetchDataAndPutToStorage(body: WeatherDTO): Promise<unknown> {
@@ -50,15 +55,19 @@ export class WeatherService {
 
     const response = await fetch(addr.href);
 
-    if (!response.ok) {
-      throw new BadGatewayException('Invalid response from openweathermap');
-    }
-
     let weatherData = null;
     try {
       weatherData = await response.json();
     } catch (err) {
       throw new BadGatewayException('Invalid json from openweathermap');
+    }
+
+    if (!response.ok) {
+      if (weatherData.message) {
+        throw new BadGatewayException(`Openweathermap: ${weatherData.message}`);
+      } else {
+        throw new BadGatewayException('Invalid response from openweathermap');
+      }
     }
 
     try {

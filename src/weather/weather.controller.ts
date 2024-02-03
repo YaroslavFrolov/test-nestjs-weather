@@ -17,7 +17,7 @@ import { WeatherGetInterceptor } from './weather-get.interceptor';
 export class WeatherController {
   constructor(private weatherService: WeatherService) {}
 
-  @UseInterceptors(new WeatherGetInterceptor())
+  @UseInterceptors(WeatherGetInterceptor)
   @Get()
   async get(
     @Query('lat', ParseFloatPipe) lat: number,
