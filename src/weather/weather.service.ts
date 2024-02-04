@@ -5,11 +5,11 @@ import {
   BadGatewayException,
   NotFoundException,
 } from '@nestjs/common';
-import { Op } from 'sequelize';
 import { InjectModel } from '@nestjs/sequelize';
+import { Op } from 'sequelize';
+import fetch from 'node-fetch';
 import { WeatherRequest } from './weather-request.model';
 import { WeatherDTO } from './weather.dto';
-import fetch from 'node-fetch';
 
 @Injectable()
 export class WeatherService {

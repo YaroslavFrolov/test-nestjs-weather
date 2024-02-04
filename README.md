@@ -1,9 +1,39 @@
-Апі яке вказано в тестовому завданні - не безкоштовне. Необхідно активувати [платну підписку](https://openweathermap.org/price#weather), інакше повертає 401. Тому вимушений був використовувати безплатний варіант 'https://api.openweathermap.org/data/2.5/weather'. Він не приймає параметр 'part'(exclude). Але логіку реалізував з підтримкою цього параметру. Якщо робити запити до платного апі - то все має процювати як очікується.
+Апі, яке вказано в тестовому завданні - платне. Необхідно активувати [платну підписку](https://openweathermap.org/price#weather), інакше повертає 401. Тому вимушений був використовувати безкоштовний варіант 'https://api.openweathermap.org/data/2.5/weather'. Він не приймає параметр 'part'(exclude). Але логіку реалізував з підтримкою цього параметру. Якщо робити запити до платного апі - то буде процювати з урахуванням part(exclude).
 
 <br />
 <br />
 
-## Test task
+## **Start application**
+
+- Clone repo
+
+- Create the `.env` file in root of project with next content:
+
+  - WEATHER_API_KEY=
+  - WEATHER_BASE_URL=
+  - DB_NAME=
+  - DB_USER=
+  - DB_PASS=
+
+  Ask to Karina-HR for valid values..))
+
+- Execute `docker-compose up`
+
+- Now you can make GET and POST requests to `http://localhost:3000/weather`:
+  - for example `GET http://localhost:3000/weather?lon=94.03&lat=33.44&part=current`
+  - for example `POST http://localhost:3000/weather` with body:
+  ```json
+  {
+    "lat": 33.44,
+    "lon": 94.03,
+    "part": "current"
+  }
+  ```
+
+<br />
+<br />
+
+## **Test task**
 
 Створити проект на nest який буде фетчити дані із https://openweathermap.org/api/one-call-3#current та записувати в БД
 

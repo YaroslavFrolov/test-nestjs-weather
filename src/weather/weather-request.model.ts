@@ -3,6 +3,7 @@ import { Table, Column, Model } from 'sequelize-typescript';
 
 @Table({
   indexes: [{ fields: ['lat', 'lon'], unique: true }],
+  comment: 'Logs of requests into openweathermap service.',
 })
 export class WeatherRequest extends Model {
   @Column({
