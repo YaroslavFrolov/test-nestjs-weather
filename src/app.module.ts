@@ -12,7 +12,6 @@ import { AppController } from './app.controller';
       dialect: 'postgres',
 
       host: 'db', // localhost
-      // port: Number(process.env.DB_PORT),
       port: 5432,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
